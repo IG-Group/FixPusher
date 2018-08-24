@@ -320,7 +320,7 @@ public class FIXConnector implements Application {
 	@Override
 	public void toApp(final Message arg0, final SessionID arg1) throws DoNotSend {
 		
-		logTableModel.addMessage(arg0);
+		//logTableModel.addMessage(arg0);
 	}
 
 }

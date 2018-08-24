@@ -18,6 +18,7 @@
  **/
 package net.sourceforge.fixpusher.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -26,10 +27,12 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -42,11 +45,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sourceforge.fixpusher.control.ExcelExport;
 import net.sourceforge.fixpusher.control.FIXConnectionListener;
@@ -124,6 +131,8 @@ public class TopPanel extends JPanel implements FIXConnectionListener, MainPanel
 
 	private JMenuItem startSessionMenuItem = null;
 
+	private JTextField repeatTextField = null;
+	
 	private Status status = Status.DISCONNECTED;
 
 	private StatusPanel statusPanel = null;
@@ -567,6 +576,21 @@ public class TopPanel extends JPanel implements FIXConnectionListener, MainPanel
 			}
 		});
 
+		final JLabel repeatLabel = new JLabel();
+		repeatLabel.setText("Repeat");
+		repeatLabel.setFont(new Font("Dialog", Font.PLAIN, 10));
+		repeatLabel.setForeground(Color.WHITE);
+		toolBar.add(repeatLabel);
+		
+		repeatTextField = new JTextField();
+		repeatTextField.setPreferredSize(new Dimension(1, 25));
+		repeatTextField.setMinimumSize(new Dimension(1, 25));
+		repeatTextField.setColumns(1);
+		final GridBagConstraints gbc_repeatTextField = new GridBagConstraints();
+		gbc_repeatTextField.anchor = GridBagConstraints.WEST;
+		gbc_repeatTextField.insets = new Insets(5, 20, 5, 5);
+		toolBar.add(repeatTextField, gbc_repeatTextField);
+		
 		sendMessageButton = new ToolbarButton(new ImageIcon(FIXPusher.class.getClassLoader().getResource("images/22x22/player_play.png")),
 				"Send Message");
 		toolBar.add(sendMessageButton);
@@ -575,8 +599,23 @@ public class TopPanel extends JPanel implements FIXConnectionListener, MainPanel
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-
-				send();
+				int nRepeat = 1;
+				if (repeatTextField.getText().trim().length() != 0) {
+					try {
+						nRepeat = Integer.parseInt(repeatTextField.getText().trim());
+					} catch (Exception exp) {
+						
+					}
+				}
+				long start = System.nanoTime();
+				
+				for (int i=0;i<nRepeat;i++) {
+					send();
+				}
+				long end = System.nanoTime();
+				Logger logger = LoggerFactory.getLogger(this.getClass());
+				logger.info("Sending used " + String.valueOf((end-start)/1000000) + "ms.");
+				
 			}
 		});
 
