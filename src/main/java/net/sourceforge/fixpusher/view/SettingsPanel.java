@@ -31,6 +31,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -1516,16 +1517,13 @@ public class SettingsPanel extends AbstractMainPanelContent {
 
 			valid = true;
 
-			final File file = new File(transportDataDictionaryField.getText());
+			final InputStream in = getClass().getClassLoader().getResourceAsStream(transportDataDictionaryField.getText());
 			String checkResult = null;
 
-			if (!file.isFile())
+			if (in == null)
 				checkResult = "The path does not point to a file.";
 
-			else if (!file.canRead())
-				checkResult = "The file is not readable.";
-
-			else if (!DictionaryParser.check(file))
+			else if (!DictionaryParser.check(in))
 				checkResult = "The file does not contain valid data.";
 
 			if (checkResult != null) {
@@ -1560,16 +1558,13 @@ public class SettingsPanel extends AbstractMainPanelContent {
 
 		valid = true;
 
-		final File file = new File(getClass().getClassLoader().getResource(dataDictionaryField.getText()).getFile());
+		final InputStream in = getClass().getClassLoader().getResourceAsStream(dataDictionaryField.getText());
 		String checkResult = null;
 
-		if (!file.isFile())
+		if (in == null)
 			checkResult = "The path does not point to a file.";
 
-		else if (!file.canRead())
-			checkResult = "The file is not readable.";
-
-		else if (!DictionaryParser.check(file))
+		else if (!DictionaryParser.check(in))
 			checkResult = "The file does not contain valid data.";
 
 		if (checkResult != null) {

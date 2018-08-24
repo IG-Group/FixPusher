@@ -679,7 +679,7 @@ public class FIXProperties implements FIXMessageFilterListener {
 				final TransformerFactory tFactory = TransformerFactory.newInstance();
 				final Transformer transformer = tFactory.newTransformer();
 				final DOMSource source = new DOMSource(document);
-				final StreamResult result = new StreamResult(new File("./conf/fixpusher.xml"));
+				final StreamResult result = new StreamResult(new File("conf/fixpusher.xml"));
 				transformer.transform(source, result);
 
 				createProject("Default", null);

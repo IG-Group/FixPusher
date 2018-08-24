@@ -3,4 +3,6 @@
 .settings
 .svn
 bin
+/log/
+/conf/
 /target/

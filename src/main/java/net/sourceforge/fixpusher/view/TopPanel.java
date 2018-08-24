@@ -406,31 +406,6 @@ public class TopPanel extends JPanel implements FIXConnectionListener, MainPanel
 		helpMenu.setFont(new Font("Dialog", Font.PLAIN, 12));
 		menuBar.add(helpMenu);
 
-		if (desktop != null) {
-
-			final JMenuItem helpMenuItem = new JMenuItem("FIX Pusher Help", 'F');
-			helpMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-			helpMenuItem.setIcon(new ImageIcon(FIXPusher.class.getClassLoader().getResource("images/16x16/help.png")));
-			helpMenuItem.setFont(new Font("Dialog", Font.PLAIN, 12));
-			helpMenu.add(helpMenuItem);
-
-			helpMenuItem.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(final ActionEvent e) {
-
-					try {
-
-						final File file = new File("doc/html/help.html");
-						desktop.open(file);
-					}
-					catch (final Exception e1) {
-
-						JOptionPane.showMessageDialog(TopPanel.this.mainPanel, e1.getMessage(), "Connection Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			});
-		}
 
 		final JMenuItem mntmNewMenuItem_8 = new JMenuItem("About FIX Pusher");
 		mntmNewMenuItem_8.setIcon(new ImageIcon(FIXPusher.class.getClassLoader().getResource("images/16x16/documentinfo.png")));
@@ -654,33 +629,6 @@ public class TopPanel extends JPanel implements FIXConnectionListener, MainPanel
 
 		});
 
-		if (desktop != null) {
-
-			final JLabel separatorLabel4 = new JLabel();
-			separatorLabel4.setIcon(new ImageIcon(FIXPusher.class.getClassLoader().getResource("images/separator.png")));
-			toolBar.add(separatorLabel4);
-
-			final ToolbarButton helpButton = new ToolbarButton(new ImageIcon(
-					FIXPusher.class.getClassLoader().getResource("images/22x22/help.png")), "FIX Pusher Help");
-			helpButton.setEnabled(true);
-			toolBar.add(helpButton);
-
-			helpButton.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(final ActionEvent e) {
-
-					try {
-						final File file = new File("doc/html/help.html");
-						desktop.open(file);
-					}
-					catch (final Exception e1) {
-
-					}
-				}
-			});
-
-		}
 
 		final JLabel logoLabel = new JLabel();
 		logoLabel.setIcon(new ImageIcon(FIXPusher.class.getClassLoader().getResource("images/toolbar-logo.png")));

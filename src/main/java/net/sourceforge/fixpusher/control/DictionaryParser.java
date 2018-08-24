@@ -19,6 +19,7 @@
 package net.sourceforge.fixpusher.control;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class DictionaryParser {
 	 * @param file the file
 	 * @return true, if successful
 	 */
-	public static boolean check(final File file) {
+	public static boolean check(final InputStream file) {
 
 		try {
 
@@ -151,7 +152,7 @@ public class DictionaryParser {
 
 				final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				builder = factory.newDocumentBuilder();
-				transportDataDictionaryDocument = builder.parse(new File(getClass().getClassLoader().getResource(file2).getFile()));
+				transportDataDictionaryDocument = builder.parse(getClass().getClassLoader().getResourceAsStream(file2));
 			}
 			catch (final Exception e) {
 
