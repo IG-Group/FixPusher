@@ -2,6 +2,5 @@
 .project
 .settings
 .svn
-log
 bin
 /target/
