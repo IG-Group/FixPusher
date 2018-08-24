@@ -96,7 +96,7 @@ public class AboutDialog extends JDialog {
 		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 
-		final JLabel copyrightLabel = new JLabel("Version " + FIXPusher.version + "  -  Copyright (C) 2012  Alexander Pinnow");
+		final JLabel copyrightLabel = new JLabel("Version " + FIXPusher.version);
 		copyrightLabel.setForeground(Color.WHITE);
 		copyrightLabel.setFont(new Font("Dialog", Font.BOLD, 12));
 		final GridBagConstraints gbc_copyrightLabel = new GridBagConstraints();
@@ -167,13 +167,13 @@ public class AboutDialog extends JDialog {
 
 		final StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer
-				.append("FIX Pusher is free software; you can redistribute it and/or modify it under the terms of the GNU Library General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.");
+				.append("This is a bulk sending testing on top of FIX Pusher");
 		stringBuffer.append("\n\n");
 		stringBuffer
-				.append("FIX Pusher is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Library General Public License for more details.");
+				.append("end-startPlease refer to original FIX Pusher for license info");
 		stringBuffer.append("\n\n");
 		stringBuffer
-				.append("You should have received a copy of the GNU Library General Public License along with this library; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.");
+				.append("License");
 
 		final JTextPane licensePane = new JTextPane();
 		licensePane.setEditable(false);
