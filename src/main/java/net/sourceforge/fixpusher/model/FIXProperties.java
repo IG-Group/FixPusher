@@ -22,6 +22,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -595,35 +597,30 @@ public class FIXProperties implements FIXMessageFilterListener {
 		else
 			dictionaryParser = new DictionaryParser(getDataDictionary(), null);
 
+		String logPath = getFileLogPath();
 		try {
 
-			final BufferedReader bufferedReader = new BufferedReader(new FileReader(getFileLogPath() + "/" + getBeginString() + "-" + getSenderCompID() + "-"
-					+ getTargetCompID() + ".messages.log"));
+			String fileName = logPath + "/" + getBeginString() + "-" + getSenderCompID() + "-"
+					+ getTargetCompID() + ".messages.log";
+			Files.createDirectories(Paths.get(logPath));
+			
+			File file = new File(fileName);
+			file.createNewFile();
+			
+			final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
 			String messageLine = null;
 			quickFixDataDictionary = new DataDictionary(getDataDictionary());
 			int lineCount = 0;
 			Exception exception = null;
-			while ((messageLine = bufferedReader.readLine()) != null && lineCount++ < 30000 && exception == null)
-				try {
-
-					messages.add(MessageUtils.parse(new DefaultMessageFactory(), quickFixDataDictionary, messageLine));
-				}
-				catch (final Exception e) {
-
-					exception = e;
-				}
-
-			if (exception != null)
-				ExceptionDialog.showException(exception);
+			while ((messageLine = bufferedReader.readLine()) != null && lineCount++ < 30000 && exception == null) {
+				messages.add(MessageUtils.parse(new DefaultMessageFactory(), quickFixDataDictionary, messageLine));
+			}
+			bufferedReader.close();
 		}
 		catch (final Exception e) {
-
-			final File file = new File(getFileLogPath());
-
-			if (!file.isDirectory() || !file.canRead() || !file.canWrite())
-				ExceptionDialog.showException(e);
-		}
+			ExceptionDialog.showException(e);
+		} 
 
 		fireFIXPropertyChanged(messages);
 	}
